@@ -42,4 +42,13 @@ app.set('view engine', 'hdb');
 //db.connect();
 router(app);
 
-app.listen(port, () => console.log('Listening to http://localhost:' + port));
+app.listen(
+    { port: process.env.PORT, host: "0.0.0.0" },
+    function (err, address) {
+        if (err) {
+            console.error(err);
+            process.exit(1);
+        }
+        console.log(`Your app is listening on ${address}`);
+    }
+);
