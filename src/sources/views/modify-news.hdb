@@ -1,0 +1,152 @@
+<div class="mt-4 container text-center">
+    <div class="row">
+        <div class="col">
+            <a href="/news/trash">Thùng rác({{deletedItems.length}})</a>
+            <h4><b>{{items.length}} tin</b></h4>
+        </div>
+        <div class="col-6">
+            <h1>Chỉnh sửa tin</h1>
+        </div>
+        <div class="col" style="display: flex; justify-content: end">
+            <form method="get" action="/news/add-news" class="d-flex">
+                <button style="min-width: fit-content" class="btn btn-outline-success" type="submit">
+                    Thêm tin
+                </button>
+            </form>
+        </div>
+    </div>
+    <!--===============HEAD====================================-->
+    <form id="form-delete-check" method="post" action="/news/modify/deleteCheckbox">
+        <div class="row">
+            <div class="col">
+                <div class="d-flex p-2 justify-content-left align-items-center">
+                    <input style="border: 2px solid black;" id="check-all" class="form-check-input m-2 " type="checkbox">
+                    <h6 class="m-0 p-0">chọn tất cả</h6>
+                    <button style="margin-left: 50px;" id="deleteCheckbox" class="disabled btn btn-danger ">Xóa tin đã chọn</button>
+                </div>
+                <div></div>
+            </div>
+        </div>
+        <!--===============NECK====================================-->
+        <table class="table mt-4">
+            <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">STT</th>
+                    <th scope="col">Tiêu đề</th>
+                    <th scope="col">Ảnh</th>
+                    <th scope="col">Mô tả</th>
+                    <th scope="col" colspan="2"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each items}}
+                <tr>
+                    <th>
+                        <input style="border: 2px solid black;" class="form-check-input m-2 " type="checkbox" name="ids[]" value="{{this._id}}">
+                    </th>
+                    <th scope="row">{{sum @index 1}}</th>
+                    <td>{{this.title}}</td>
+                    <td>
+                        <a href="/news/watch-news/:{{this.slug}}">
+                            <img src="{{this.image}}" alt="" style="width: 100px; height: auto" />
+                        </a>
+                    </td>
+                    <td>{{this.description}}</td>
+
+                    <td><a href="/news/modify/:{{this.slug}}"><button type="button"
+                                class="btn btn-info">Sửa</button></a></td>
+                    <td><button type="button" class="btn btn-danger" data-delete-id="{{this._id}}"
+                            data-bs-toggle="modal" data-bs-target="#delete-news-modal">Xóa</button></td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </form>
+    <form id="delete-form" method="post" style="display: none;" enctype="application/x-www-form-urlencoded">
+        <input name="_method" value="PATCH">
+    </form>
+    <!-- Modal ===============-->
+    <div class="modal fade" id="delete-news-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Xóa tin</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h2 class="fs-5">Bạn chắc chắn muốn xóa tin?</h2>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" id="delete-btn">Xóa ngay</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!--=======================================================================================-->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var newsId;
+        const deleteForm = document.getElementById('delete-form');
+        const deleteBtn = document.getElementById('delete-btn');
+        const deleteModal = document.getElementById('delete-news-modal');
+        if (deleteModal) {
+            deleteModal.addEventListener('show.bs.modal', event => {
+                const button = event.relatedTarget;
+                newsId = button.getAttribute('data-delete-id');
+            });
+        }
+        deleteBtn.addEventListener('click', function (event) {
+            deleteForm.action = '/news/modify/delete-news/' + newsId;
+            deleteForm.submit();
+        });
+
+        //DELETE checkbox
+        var checkAll = document.getElementById('check-all');
+        var checkboxes = document.querySelectorAll('input[name="ids[]"]');
+        var deleteCheckboxBtn = document.getElementById('deleteCheckbox');
+        var formDelCheck = document.getElementById('form-delete-check');
+
+        checkAll.addEventListener('change', function (e) {
+            checkboxes.forEach(function (checkbox) {
+                checkbox.checked = e.target.checked;
+            });
+            if (e.target.checked) {
+                if (deleteCheckboxBtn.classList.contains('disabled')) {
+                    console.log('checked');
+                    deleteCheckboxBtn.classList.remove('disabled');
+                }
+            }
+            else {
+                if (!deleteCheckboxBtn.classList.contains('disabled')) {
+                    deleteCheckboxBtn.classList.add('disabled');
+                }
+            }
+        })
+
+        checkboxes.forEach(function (checkbox) {
+            checkbox.addEventListener('change', function (e) {
+                const count = document.querySelectorAll('input[name="ids[]"]:checked').length;
+                checkAll.checked = count === checkboxes.length;
+                if (count > 0) {
+                    deleteCheckboxBtn.classList.remove('disabled');
+                }
+                else {
+                    deleteCheckboxBtn.classList.add('disabled');
+                }
+            })
+        })
+        deleteCheckboxBtn.addEventListener('click', function (e) {
+            console.log('inside checker');
+            if (e.target.classList.contains('disabled')) {
+                e.preventDefault();
+                console.log('prevented');
+            }
+            else
+                console.log('submitted');
+        })
+    });
+</script>

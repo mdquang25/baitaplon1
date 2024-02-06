@@ -1,0 +1,20 @@
+<div class="mt-4">
+    <div class="row">
+        <div class="col-lg-3">
+            <a href="#" class="btn btn-primary">Buy now</a>
+        </div>
+        <div class="col-lg-9">
+            <h1 class="title">{{item.title}}</h1>
+            <iframe
+                width="840"
+                height="472"
+                src="https://www.youtube.com/embed/{{item.videoid}}?si=l-Ex-JgMGPb5WnZq"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen
+            ></iframe>
+            <p class="paragraph">{{item.description}}</p>
+        </div>
+    </div>
+</div>

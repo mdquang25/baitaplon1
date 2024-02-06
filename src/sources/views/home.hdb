@@ -1,0 +1,199 @@
+<div class="mt-4">
+    <style>
+        :root {
+            --color-success: rgb(73 193 73);
+            --color-bg-success: rgba(243, 255, 243, 0.829);
+            --color-danger: rgb(225, 35, 25);
+            --color-bg-danger: rgba(255, 243, 243, 0.765);
+            --color-warning: rgb(255, 208, 0);
+            --color-bg-warning: rgba(255, 255, 255, 0.774);
+            --color-info: rgb(19, 72, 245);
+            --color-bg-info: rgba(250, 250, 250, 0.792);
+        }
+
+        .ctner {
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: start;
+            height: 500px;
+            margin: 20px;
+        }
+
+        .bt {
+            color: white;
+            border-radius: 20px;
+            border: .4px solid gray;
+            min-width: 100px;
+            padding: 3px;
+            margin: 10px;
+            transition: all .1s ease;
+        }
+
+        .bt__success {
+            background-color: rgb(27, 177, 27);
+        }
+
+        .bt__info {
+            background-color: rgb(19, 72, 245);
+        }
+
+        .bt__warning {
+            background-color: rgb(255, 208, 0);
+        }
+
+        .bt__danger {
+            background-color: rgb(225, 35, 25);
+        }
+
+        .bt:hover {
+            opacity: 80%;
+        }
+    </style>
+
+    <div class="ctner">
+        <button id="btn-danger" class="bt bt__danger">Danger</button>
+        <button id="btn-warning" class="bt bt__warning">Warning</button>
+        <button id="btn-info" class="bt bt__info">Info</button>
+        <button id="btn-success" class="bt bt__success">Success</button>
+    </div>
+
+    <style>
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+            }
+
+            to {
+                transform: translateX(10px);
+            }
+        }
+
+        @keyframes fadeOut {
+            to {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+        }
+
+        .toes {
+            border: 1px solid;
+            border-left: 6px solid;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            width: 400px;
+            margin-bottom: 20px;
+            animation: slideInRight ease 0.5s, fadeOut linear 0.3s 3s forwards;
+            transition: all linear .3s;
+            box-shadow: 4px 4px 2px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .toast--success {
+            background-color: var(--color-bg-success);
+            border-color: var(--color-success);
+        }
+
+        .toast--info {
+            background-color: var(--color-bg-info);
+            border-color: var(--color-info);
+        }
+
+        .toast--warning {
+            background-color: var(--color-bg-warning);
+            border-color: var(--color-warning);
+        }
+
+        .toast--danger {
+            background-color: var(--color-bg-danger);
+            border-color: var(--color-danger);
+        }
+
+        .toast--success .toast__header {
+            color: var(--color-success);
+        }
+
+        .toast--info .toast__header {
+            color: var(--color-info);
+        }
+
+        .toast--warning .toast__header {
+            color: var(--color-warning);
+        }
+
+        .toast--danger .toast__header {
+            color: var(--color-danger);
+        }
+
+        .toast__header i {
+            font-size: 2rem;
+            padding: 10px;
+            padding-left: 2px;
+        }
+
+        .toast__body {
+            flex: 1;
+            align-self: flex-start
+        }
+
+        .toast__title {
+            font-weight: 500;
+            font-size: .7rem;
+        }
+
+        .toast__text {
+            font-size: .6rem;
+        }
+
+        .toast__footer {
+            color: gray;
+            padding: 5px;
+        }
+
+        #toast {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 410px;
+        }
+    </style>
+    <div id="toast"></div>
+</div>
+
+<script>
+    const btnSuccess = document.getElementById('btn-success');
+    const btnInfo = document.getElementById('btn-info');
+    const btnWarning = document.getElementById('btn-warning');
+    const btnDanger = document.getElementById('btn-danger');
+    const toastContainer = document.getElementById('toast');
+
+    btnSuccess.addEventListener('click', e => initialToast('Success news', 'Description of success toast!', 'success'));
+    btnInfo.addEventListener('click', e => initialToast('Info news', 'Description of info toast!', 'info'));
+    btnWarning.addEventListener('click', e => initialToast('Warning news', 'Description of waring toast!', 'warning'));
+    btnDanger.addEventListener('click', e => initialToast('Danger news', 'Description of danger toast!', 'danger'));
+
+    function initialToast(title, text, type) {
+        const icon = type === 'success' ? 'check' : type === 'info' ? 'info' : type === 'danger' ? 'xmark' : 'exclamation';
+        const toast = document.createElement('div');
+        toast.classList.add('toes');
+        toast.classList.add('toast--' + type);
+        toast.innerHTML = (
+            `<div class="toast__header">
+                <i class="fa-solid fa-circle-${icon}"></i><!--check info exclamation xmark-->
+                </div>
+            <div class="toast__body">
+                <div class="toast__title">${title}</div>
+                <div class="toast__text">${text}</div>
+                </div>
+            <div class="toast__footer">
+                <i class="fa-solid fa-xmark"></i>
+                </div>`
+        );
+        toastContainer.appendChild(toast);
+
+
+        setTimeout(() => {
+                toastContainer.removeChild(toast);
+            }, 3300); // Wait for animation duration + 3 seconds
+    }
+</script>
+</div>

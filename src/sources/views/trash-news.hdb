@@ -1,0 +1,99 @@
+<div class="mt-4 container text-center" data-bs-theme="dark">
+    <div class="row">
+        <div class="col">
+            <a href="/news/modify">Quay về danh sách tin tức</a>
+            <h4><b>{{items.length}} tin</b></h4>
+        </div>
+        <div class="col-6">
+            <h1>Thùng rác</h1>
+        </div>
+        <div class="col" style="display: flex; justify-content: end">
+        </div>
+    </div>
+    <!--===============HEAD====================================-->
+    <form id="form-delete-check" method="post" action="/news/modify/deleteCheckbox">
+        <div class="row">
+            <div class="col">
+                <div class="d-flex p-2 justify-content-left align-items-center">
+                    <input style="border: 2px solid black;" id="check-all" class="form-check-input m-2 " type="checkbox">
+                    <h6 class="m-0 p-0">chọn tất cả</h6>
+                    <button style="margin-left: 50px;" id="restoreCheckbox" class="disabled btn btn-success ">Khôi phục chọn</button>
+                    <button style="margin-left: 50px;" id="deleteCheckbox" class="disabled btn btn-danger ">Xóa tin đã
+                        chọn</button>
+                </div>
+                <div></div>
+            </div>
+        </div>
+        <!--===============NECK====================================-->
+    <table class="table mt-4">
+        <thead>
+            <tr>
+                <th scope="col">STT</th>
+                <th scope="col">Tiêu đề</th>
+                <th scope="col">Ảnh</th>
+                <th scope="col">Mô tả</th>
+                <th scope="col" colspan="2"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each items}}
+            <tr>
+                <th scope="row">{{sum @index 1}}</th>
+
+                <td>{{this.title}}</td>
+                <td>
+                    <a href="/news/watch-news/:{{this.slug}}">
+                        <img src="{{this.image}}" alt="" style="width: 100px; height: auto" />
+                    </a>
+                </td>
+                <td>{{this.description}}</td>
+
+                <td><a href="/news/trash/restore/{{this._id}}"><button type="button" class="btn btn-success">khôi
+                            phục</button></a></td>
+                <td><button type="button" class="btn btn-danger" data-delete-id="{{this._id}}" data-bs-toggle="modal"
+                        data-bs-target="#delete-news-modal">Xóa vĩnh viễn</button></td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+
+<!-- Modal -->
+<div class="modal fade" id="delete-news-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel" style="color: red">XÓA TIN</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h2 class="fs-5" style="color: red"><STRONG><i>Hành động này sẽ không thể khôi phục!</i></STRONG><br>Bạn
+                    vẫn muốn xóa?</h2>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="delete-btn">Xóa vĩnh viễn</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <form id="delete-form" method="post" style="display: none;" enctype="application/x-www-form-urlencoded">
+        <input name="_method" value="DELETE">
+    </form>
+
+    <script>
+        var newsId;
+        const deleteForm = document.getElementById('delete-form');
+        const deleteBtn = document.getElementById('delete-btn');
+        const deleteModal = document.getElementById('delete-news-modal');
+        if (deleteModal) {
+            deleteModal.addEventListener('show.bs.modal', event => {
+                const button = event.relatedTarget;
+                newsId = button.getAttribute('data-delete-id');
+            });
+        }
+        deleteBtn.addEventListener('click', function (event) {
+            deleteForm.action = '/news/trash/permanent-delete-news/' + newsId;
+            deleteForm.submit();
+        });
+    </script>

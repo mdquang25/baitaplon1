@@ -1,0 +1,43 @@
+{
+  "name": "baitaplon1",
+  "version": "1.0.0",
+  "description": "bai tap lon 1 Ma Dinh Quang KTPM K21C N03",
+  "main": "src/index.js",
+  "scripts": {
+    "prettier": "prettier --trailing-comma all --tab-width 4 --single-quote --write 'src/**/*.{js,json,scss,hdb}'",
+    "start": "node src/index.js",
+    "watch": "sass --watch src/sources/sass:src/public/css",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mdquang25/baitaplon1.git"
+  },
+  "keywords": [
+    "baitaplon",
+    "websitecuahangdogo"
+  ],
+  "author": "mdquang25",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mdquang25/baitaplon1/issues"
+  },
+  "homepage": "https://github.com/mdquang25/baitaplon1#readme",
+  "dependencies": {
+    "@popperjs/core": "^2.11.8",
+    "express": "^4.18.2",
+    "express-handlebars": "^7.1.2",
+    "method-override": "^3.0.0",
+    "mongoose": "^8.0.3",
+    "mongoose-slug-plugin": "^2.1.0",
+    "mongoosejs-soft-delete": "^1.0.2"
+  },
+  "devDependencies": {
+    "husky": "^8.0.3",
+    "lint-staged": "^15.2.0",
+    "morgan": "^1.10.0",
+    "nodemon": "^3.0.2",
+    "prettier": "^3.1.1",
+    "sass": "^1.69.7"
+  }
+}

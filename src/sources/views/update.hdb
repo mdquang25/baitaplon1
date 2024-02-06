@@ -1,0 +1,27 @@
+<div class="mt-4" style="background-color: lightgray; display: flex; justify-content: center">
+    <form method="post" enctype="application/x-www-form-urlencoded" action="/news/modify/updated" style="width: 80%">
+        <input style="display: none;" name="_method" value="PUT">
+        <div>
+            <h1>Sửa tin tức</h1>
+        </div>
+        <div class="form-group">
+            <label for="name" style="font-weight: 500; font-size: larger">Tiêu đề</label>
+            <input type="text" name="title" class="form-control" autocomplete="off" value="{{item.title}}" />
+        </div>
+        <div class="form-group">
+            <label for="description" style="font-weight: 500; font-size: larger">Mô tả</label>
+            <textarea class="form-control" name="description" rows="5">
+{{item.description}}</textarea>
+        </div>
+        <div class="form-group">
+            <label for="video-id" style="font-weight: 500; font-size: larger">Youtube video id</label>
+            <input type="text" name="videoid" class="form-control" value="{{item.videoid}}" />
+        </div>
+        <div>
+            <input type="text" name="id" value="{{item._id}}" style="display: none" />
+        </div>
+        <p></p>
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <p></p>
+    </form>
+</div>
