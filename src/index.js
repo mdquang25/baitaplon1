@@ -40,7 +40,7 @@ app.engine(
 app.set('views', path.join(__dirname, 'sources', 'views'));
 app.set('view engine', 'hdb');
 
-//db.connect();
+db.connect();
 router(app);
 
 app.listen(
