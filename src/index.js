@@ -50,6 +50,6 @@ app.listen(
             console.error(err);
             process.exit(1);
         }
-        console.log(`Your app is listening on ${address}`);
+        console.log(`Your app is listening on ${process.env.HOST}:${process.env.PORT}`);
     }
 );
