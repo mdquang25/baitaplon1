@@ -1,6 +1,7 @@
 const express = require('express');
 const hdb = require('express-handlebars');
-const port = process.env.port || 3000;
+const host = process.env.HOST || '0.0.0.0';
+const port = process.env.PORT || 3000;
 const app = express();
 const methodOverride = require('method-override');
 const path = require('path');
@@ -43,7 +44,7 @@ app.set('view engine', 'hdb');
 router(app);
 
 app.listen(
-    { port: port, host: "34.32.135.56" },
+    { port, host },
     function (err, address) {
         if (err) {
             console.error(err);
