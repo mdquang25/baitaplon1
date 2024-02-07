@@ -5,8 +5,10 @@ const app = express();
 const methodOverride = require('method-override');
 const path = require('path');
 
-//const db = require('./config/db');
+const db = require('./config/db');
 const router = require('./routes');
+//const morgan = require('morgan');
+//app.use(morgan('combined'))
 
 
 
@@ -41,10 +43,11 @@ app.set('view engine', 'hdb');
 router(app);
 
 app.listen(
-    { port: port, host: "0.0.0.0" },
+    { port: port, host: "104.196.232.237" },
     function (err, address) {
         if (err) {
-            console.log('error with hosting');
+            console.error(err);
+            process.exit(1);
         }
         console.log(`Your app is listening on ${address}`);
     }
