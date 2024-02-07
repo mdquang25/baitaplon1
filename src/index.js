@@ -43,7 +43,7 @@ app.set('view engine', 'hdb');
 router(app);
 
 app.listen(
-    { port: port, host: "104.196.232.237" },
+    { port: port, host: "34.32.135.56" },
     function (err, address) {
         if (err) {
             console.error(err);
