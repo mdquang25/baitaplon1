@@ -5,7 +5,7 @@ const app = express();
 const methodOverride = require('method-override');
 const path = require('path');
 
-const db = require('./config/db');
+//const db = require('./config/db');
 const router = require('./routes');
 
 
@@ -37,15 +37,14 @@ app.engine(
 app.set('views', path.join(__dirname, 'sources', 'views'));
 app.set('view engine', 'hdb');
 
-db.connect();
+//db.connect();
 router(app);
 
 app.listen(
     { port: port, host: "0.0.0.0" },
     function (err, address) {
         if (err) {
-            console.error(err);
-            process.exit(1);
+            console.log('error with hosting');
         }
         console.log(`Your app is listening on ${address}`);
     }
